@@ -19,13 +19,15 @@ setup(
     ),
     license="Apache",
     url="https://github.com/cenaav/External-Attention-pytorch",
-    package_dir={"": "."},
-    packages=find_packages("."),
+    package_dir={"": "model"},
+    packages=find_packages("model"),
+    
     # entry_points={
     #     "console_scripts": [
     #         "huggingface-cli=huggingface_hub.commands.huggingface_cli:main"
     #     ]
     # },
+    
     python_requires=">=3.8.0",
     install_requires=requirements,
     classifiers=[
