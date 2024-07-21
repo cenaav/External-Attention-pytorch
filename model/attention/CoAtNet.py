@@ -3,7 +3,7 @@ import torch
 import sys
 from math import sqrt
 sys.path.append('.')
-from conv.MBConv import MBConvBlock
+from ..conv.MBConv import MBConvBlock
 from .SelfAttention import ScaledDotProductAttention
 
 class CoAtNet(nn.Module):
