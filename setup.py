@@ -19,8 +19,9 @@ setup(
     ),
     license="Apache",
     url="https://github.com/cenaav/External-Attention-pytorch",
-    package_dir={"": "model"},
-    packages=find_packages("model"),
+    
+    package_dir={'fighingcv': 'model'},  # Change here
+    packages=['fighingcv'] + ['fighingcv.' + pkg for pkg in find_packages('model')], 
     
     # entry_points={
     #     "console_scripts": [
