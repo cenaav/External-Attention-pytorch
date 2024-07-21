@@ -8,7 +8,7 @@ from typing import Optional
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from timm.models.efficientnet_blocks import SqueezeExcite
+from timm.models.efficientnet import SqueezeExcite
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 from timm.models.registry import register_model
 

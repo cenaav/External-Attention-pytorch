@@ -1,12 +1,13 @@
 from setuptools import find_packages, setup
 
-
-
+with open('requirements.txt') as f:
+    requirements = f.read().splitlines()
+    
 setup(
     name="fighingcv",
     version="1.0.0",
-    author="xmu-xiaoma666",
-    author_email="julien@huggingface.co",
+    author="Cena Av",
+    author_email="sinaavakh@gmail.com",
     description=(
         "FightingCV Codebase For Attention,Backbone, MLP, Re-parameter, Convolution"
     ),
@@ -17,7 +18,7 @@ setup(
         "Backbone"
     ),
     license="Apache",
-    url="https://github.com/xmu-xiaoma666/External-Attention-pytorch",
+    url="https://github.com/cenaav/External-Attention-pytorch",
     package_dir={"": "."},
     packages=find_packages("."),
     # entry_points={
@@ -25,8 +26,8 @@ setup(
     #         "huggingface-cli=huggingface_hub.commands.huggingface_cli:main"
     #     ]
     # },
-    python_requires=">=3.7.0",
-    # install_requires=install_requires,
+    python_requires=">=3.8.0",
+    install_requires=requirements,
     classifiers=[
         "Intended Audience :: Developers",
         "Intended Audience :: Education",
@@ -36,4 +37,7 @@ setup(
         "Programming Language :: Python :: 3",
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
     ],
+    project_urls={
+        "Forked From": "https://github.com/xmu-xiaoma666/External-Attention-pytorch"
+    }
 )

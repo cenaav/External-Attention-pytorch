@@ -41,7 +41,7 @@ specification = {
         'weights': 'https://dl.fbaipublicfiles.com/LeViT/LeViT-384-9bdaf2e2.pth'},
 }
 
-__all__ = [specification.keys()]
+__all__ = list(specification.keys())
 
 
 @register_model
