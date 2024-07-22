@@ -11,8 +11,10 @@ import itertools
 
 from timm.data import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
 from timm.models.layers import DropPath, trunc_normal_
-from timm.models.registry import is_model_registered, register_model
+from timm.models.registry import register_model
 from timm.layers.helpers import to_2tuple
+from .timm_helper import is_model_registered
+
 
 EfficientFormer_width = {
     'l1': [48, 96, 224, 448],

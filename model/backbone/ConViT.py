@@ -15,8 +15,9 @@ from functools import partial
 import torch.nn.functional as F
 from timm.models.helpers import load_pretrained
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
-from timm.models.registry import is_model_registered, register_model
+from timm.models.registry import register_model
 from timm.models.vision_transformer import _cfg
+from .timm_helper import is_model_registered
 
 import torch
 import torch.nn as nn

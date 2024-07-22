@@ -9,7 +9,8 @@ from timm.data import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
 from timm.models.helpers import load_pretrained
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 from timm.models.resnet import resnet26d, resnet50d
-from timm.models.registry import is_model_registered, register_model
+from timm.models.registry import register_model
+from .timm_helper import is_model_registered
 
 
 def _cfg(url='', **kwargs):

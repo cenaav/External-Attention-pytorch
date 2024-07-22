@@ -6,8 +6,9 @@ import numpy as np
 from functools import partial
 
 from timm.models.vision_transformer import VisionTransformer, _cfg
-from timm.models.registry import is_model_registered, register_model
+from timm.models.registry import register_model
 from timm.models.layers import trunc_normal_
+from .timm_helper import is_model_registered
 
 
 __all__ = [

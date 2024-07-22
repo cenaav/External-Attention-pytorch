@@ -10,7 +10,8 @@ import torch.nn.functional as F
 
 from timm.data import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
-from timm.models.registry import is_model_registered, register_model
+from timm.models.registry import register_model
+from .timm_helper import is_model_registered
 
 from einops import rearrange
 from functools import partial
@@ -583,6 +584,10 @@ class CoaT(nn.Module):
             x = self.head(x)
             return x
 
+
+def is_model_registered(model_name):
+    """ Check if a model is already registered in timm's registry. """
+    return model_name in model_entrypoint
 
 # CoaT.
 if not is_model_registered('coat_tiny'):
