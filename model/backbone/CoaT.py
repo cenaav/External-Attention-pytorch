@@ -585,10 +585,6 @@ class CoaT(nn.Module):
             return x
 
 
-def is_model_registered(model_name):
-    """ Check if a model is already registered in timm's registry. """
-    return model_name in model_entrypoint
-
 # CoaT.
 if not is_model_registered('coat_tiny'):
     @register_model
