@@ -15,7 +15,7 @@ from functools import partial
 import torch.nn.functional as F
 from timm.models.helpers import load_pretrained
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
-from timm.models.registry import register_model
+from timm.models.registry import is_model_registered, register_model
 from timm.models.vision_transformer import _cfg
 
 import torch
@@ -210,7 +210,8 @@ class MHSA(nn.Module):
         x = self.proj(x)
         x = self.proj_drop(x)
         return x
-    
+
+
 class Block(nn.Module):
 
     def __init__(self, dim, num_heads,  mlp_ratio=4., qkv_bias=False, qk_scale=None, drop=0., attn_drop=0.,
@@ -390,54 +391,60 @@ class VisionTransformer(nn.Module):
         x = self.head(x)
         return x
     
-    
-@register_model
-def convit_tiny(pretrained=False, **kwargs):
-    num_heads = 4
-    kwargs['embed_dim'] *= num_heads
-    model = VisionTransformer(
-        num_heads=num_heads,
-        norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
-    model.default_cfg = _cfg()
-    if pretrained:
-        checkpoint = torch.hub.load_state_dict_from_url(
-            url="https://dl.fbaipublicfiles.com/convit/convit_tiny.pth",
-            map_location="cpu", check_hash=True
-        )
-        model.load_state_dict(checkpoint)
-    return model
 
-@register_model
-def convit_small(pretrained=False, **kwargs):
-    num_heads = 9
-    kwargs['embed_dim'] *= num_heads
-    model = VisionTransformer(
-        num_heads=num_heads,
-        norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
-    model.default_cfg = _cfg()
-    if pretrained:
-        checkpoint = torch.hub.load_state_dict_from_url(
-            url="https://dl.fbaipublicfiles.com/convit/convit_small.pth",
-            map_location="cpu", check_hash=True
-        )
-        model.load_state_dict(checkpoint)
-    return model
+if not is_model_registered('convit_tiny'):
+    @register_model
+    def convit_tiny(pretrained=False, **kwargs):
+        num_heads = 4
+        kwargs['embed_dim'] *= num_heads
+        model = VisionTransformer(
+            num_heads=num_heads,
+            norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
+        model.default_cfg = _cfg()
+        if pretrained:
+            checkpoint = torch.hub.load_state_dict_from_url(
+                url="https://dl.fbaipublicfiles.com/convit/convit_tiny.pth",
+                map_location="cpu", check_hash=True
+            )
+            model.load_state_dict(checkpoint)
+        return model
 
-@register_model
-def convit_base(pretrained=False, **kwargs):
-    num_heads = 16
-    kwargs['embed_dim'] *= num_heads
-    model = VisionTransformer(
-        num_heads=num_heads,
-        norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
-    model.default_cfg = _cfg()
-    if pretrained:
-        checkpoint = torch.hub.load_state_dict_from_url(
-            url="https://dl.fbaipublicfiles.com/convit/convit_base.pth",
-            map_location="cpu", check_hash=True
-        )
-        model.load_state_dict(checkpoint)
-    return model
+
+if not is_model_registered('convit_small'):
+    @register_model
+    def convit_small(pretrained=False, **kwargs):
+        num_heads = 9
+        kwargs['embed_dim'] *= num_heads
+        model = VisionTransformer(
+            num_heads=num_heads,
+            norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
+        model.default_cfg = _cfg()
+        if pretrained:
+            checkpoint = torch.hub.load_state_dict_from_url(
+                url="https://dl.fbaipublicfiles.com/convit/convit_small.pth",
+                map_location="cpu", check_hash=True
+            )
+            model.load_state_dict(checkpoint)
+        return model
+
+
+if not is_model_registered('convit_base'):
+    @register_model
+    def convit_base(pretrained=False, **kwargs):
+        num_heads = 16
+        kwargs['embed_dim'] *= num_heads
+        model = VisionTransformer(
+            num_heads=num_heads,
+            norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
+        model.default_cfg = _cfg()
+        if pretrained:
+            checkpoint = torch.hub.load_state_dict_from_url(
+                url="https://dl.fbaipublicfiles.com/convit/convit_base.pth",
+                map_location="cpu", check_hash=True
+            )
+            model.load_state_dict(checkpoint)
+        return model
+
 
 if __name__ == '__main__':
     input=torch.randn(1,3,224,224)

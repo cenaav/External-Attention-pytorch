@@ -11,7 +11,7 @@ import itertools
 
 from timm.data import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
 from timm.models.layers import DropPath, trunc_normal_
-from timm.models.registry import register_model
+from timm.models.registry import is_model_registered, register_model
 from timm.layers.helpers import to_2tuple
 
 EfficientFormer_width = {
@@ -478,40 +478,44 @@ def _cfg(url='', **kwargs):
     }
 
 
-@register_model
-def efficientformer_l1(pretrained=False, **kwargs):
-    model = EfficientFormer(
-        layers=EfficientFormer_depth['l1'],
-        embed_dims=EfficientFormer_width['l1'],
-        downsamples=[True, True, True, True],
-        vit_num=1,
-        **kwargs)
-    model.default_cfg = _cfg(crop_pct=0.9)
-    return model
+if not is_model_registered('efficientformer_l1'):
+    @register_model
+    def efficientformer_l1(pretrained=False, **kwargs):
+        model = EfficientFormer(
+            layers=EfficientFormer_depth['l1'],
+            embed_dims=EfficientFormer_width['l1'],
+            downsamples=[True, True, True, True],
+            vit_num=1,
+            **kwargs)
+        model.default_cfg = _cfg(crop_pct=0.9)
+        return model
 
 
-@register_model
-def efficientformer_l3(pretrained=False, **kwargs):
-    model = EfficientFormer(
-        layers=EfficientFormer_depth['l3'],
-        embed_dims=EfficientFormer_width['l3'],
-        downsamples=[True, True, True, True],
-        vit_num=4,
-        **kwargs)
-    model.default_cfg = _cfg(crop_pct=0.9)
-    return model
+if not is_model_registered('efficientformer_l3'):
+    @register_model
+    def efficientformer_l3(pretrained=False, **kwargs):
+        model = EfficientFormer(
+            layers=EfficientFormer_depth['l3'],
+            embed_dims=EfficientFormer_width['l3'],
+            downsamples=[True, True, True, True],
+            vit_num=4,
+            **kwargs)
+        model.default_cfg = _cfg(crop_pct=0.9)
+        return model
 
 
-@register_model
-def efficientformer_l7(pretrained=False, **kwargs):
-    model = EfficientFormer(
-        layers=EfficientFormer_depth['l7'],
-        embed_dims=EfficientFormer_width['l7'],
-        downsamples=[True, True, True, True],
-        vit_num=8,
-        **kwargs)
-    model.default_cfg = _cfg(crop_pct=0.9)
-    return model
+if not is_model_registered('efficientformer_l7'):
+    @register_model
+    def efficientformer_l7(pretrained=False, **kwargs):
+        model = EfficientFormer(
+            layers=EfficientFormer_depth['l7'],
+            embed_dims=EfficientFormer_width['l7'],
+            downsamples=[True, True, True, True],
+            vit_num=8,
+            **kwargs)
+        model.default_cfg = _cfg(crop_pct=0.9)
+        return model
+
 
 if __name__ == '__main__':
     input=torch.randn(1,3,224,224)

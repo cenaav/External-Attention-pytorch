@@ -10,7 +10,7 @@ import torch.nn.functional as F
 
 from timm.data import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
-from timm.models.registry import register_model
+from timm.models.registry import is_model_registered, register_model
 
 from einops import rearrange
 from functools import partial
@@ -585,48 +585,55 @@ class CoaT(nn.Module):
 
 
 # CoaT.
-@register_model
-def coat_tiny(**kwargs):
-    model = CoaT(patch_size=4, embed_dims=[152, 152, 152, 152], serial_depths=[2, 2, 2, 2], parallel_depth=6, num_heads=8, mlp_ratios=[4, 4, 4, 4], **kwargs)
-    model.default_cfg = _cfg_coat()
-    return model
+if not is_model_registered('coat_tiny'):
+    @register_model
+    def coat_tiny(**kwargs):
+        model = CoaT(patch_size=4, embed_dims=[152, 152, 152, 152], serial_depths=[2, 2, 2, 2], parallel_depth=6, num_heads=8, mlp_ratios=[4, 4, 4, 4], **kwargs)
+        model.default_cfg = _cfg_coat()
+        return model
 
-@register_model
-def coat_mini(**kwargs):
-    model = CoaT(patch_size=4, embed_dims=[152, 216, 216, 216], serial_depths=[2, 2, 2, 2], parallel_depth=6, num_heads=8, mlp_ratios=[4, 4, 4, 4], **kwargs)
-    model.default_cfg = _cfg_coat()
-    return model
+if not is_model_registered('coat_mini'):
+    @register_model
+    def coat_mini(**kwargs):
+        model = CoaT(patch_size=4, embed_dims=[152, 216, 216, 216], serial_depths=[2, 2, 2, 2], parallel_depth=6, num_heads=8, mlp_ratios=[4, 4, 4, 4], **kwargs)
+        model.default_cfg = _cfg_coat()
+        return model
 
-@register_model
-def coat_small(**kwargs):
-    model = CoaT(patch_size=4, embed_dims=[152, 320, 320, 320], serial_depths=[2, 2, 2, 2], parallel_depth=6, num_heads=8, mlp_ratios=[4, 4, 4, 4], **kwargs)
-    model.default_cfg = _cfg_coat()
-    return model
+if not is_model_registered('coat_small'):
+    @register_model
+    def coat_small(**kwargs):
+        model = CoaT(patch_size=4, embed_dims=[152, 320, 320, 320], serial_depths=[2, 2, 2, 2], parallel_depth=6, num_heads=8, mlp_ratios=[4, 4, 4, 4], **kwargs)
+        model.default_cfg = _cfg_coat()
+        return model
 
 # CoaT-Lite.
-@register_model
-def coat_lite_tiny(**kwargs):
-    model = CoaT(patch_size=4, embed_dims=[64, 128, 256, 320], serial_depths=[2, 2, 2, 2], parallel_depth=0, num_heads=8, mlp_ratios=[8, 8, 4, 4], **kwargs)
-    model.default_cfg = _cfg_coat()
-    return model
+if not is_model_registered('coat_lite_tiny'):
+    @register_model
+    def coat_lite_tiny(**kwargs):
+        model = CoaT(patch_size=4, embed_dims=[64, 128, 256, 320], serial_depths=[2, 2, 2, 2], parallel_depth=0, num_heads=8, mlp_ratios=[8, 8, 4, 4], **kwargs)
+        model.default_cfg = _cfg_coat()
+        return model
 
-@register_model
-def coat_lite_mini(**kwargs):
-    model = CoaT(patch_size=4, embed_dims=[64, 128, 320, 512], serial_depths=[2, 2, 2, 2], parallel_depth=0, num_heads=8, mlp_ratios=[8, 8, 4, 4], **kwargs)
-    model.default_cfg = _cfg_coat()
-    return model
+if not is_model_registered('coat_lite_mini'):
+    @register_model
+    def coat_lite_mini(**kwargs):
+        model = CoaT(patch_size=4, embed_dims=[64, 128, 320, 512], serial_depths=[2, 2, 2, 2], parallel_depth=0, num_heads=8, mlp_ratios=[8, 8, 4, 4], **kwargs)
+        model.default_cfg = _cfg_coat()
+        return model
 
-@register_model
-def coat_lite_small(**kwargs):
-    model = CoaT(patch_size=4, embed_dims=[64, 128, 320, 512], serial_depths=[3, 4, 6, 3], parallel_depth=0, num_heads=8, mlp_ratios=[8, 8, 4, 4], **kwargs)
-    model.default_cfg = _cfg_coat()
-    return model
+if not is_model_registered('coat_lite_small'):
+    @register_model
+    def coat_lite_small(**kwargs):
+        model = CoaT(patch_size=4, embed_dims=[64, 128, 320, 512], serial_depths=[3, 4, 6, 3], parallel_depth=0, num_heads=8, mlp_ratios=[8, 8, 4, 4], **kwargs)
+        model.default_cfg = _cfg_coat()
+        return model
 
-@register_model
-def coat_lite_medium(**kwargs):
-    model = CoaT(patch_size=4, embed_dims=[128, 256, 320, 512], serial_depths=[3, 6, 10, 8], parallel_depth=0, num_heads=8, mlp_ratios=[4, 4, 4, 4], **kwargs)
-    model.default_cfg = _cfg_coat()
-    return model
+if not is_model_registered('coat_lite_medium'):
+    @register_model
+    def coat_lite_medium(**kwargs):
+        model = CoaT(patch_size=4, embed_dims=[128, 256, 320, 512], serial_depths=[3, 6, 10, 8], parallel_depth=0, num_heads=8, mlp_ratios=[4, 4, 4, 4], **kwargs)
+        model.default_cfg = _cfg_coat()
+        return model
 
 
 if __name__ == '__main__':

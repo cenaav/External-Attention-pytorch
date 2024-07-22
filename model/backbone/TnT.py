@@ -9,7 +9,7 @@ from timm.data import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
 from timm.models.helpers import load_pretrained
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 from timm.models.resnet import resnet26d, resnet50d
-from timm.models.registry import register_model
+from timm.models.registry import is_model_registered, register_model
 
 
 def _cfg(url='', **kwargs):
@@ -302,44 +302,47 @@ def _conv_filter(state_dict, patch_size=16):
     return out_dict
 
 
-@register_model
-def tnt_s_patch16_224(pretrained=False, **kwargs):
-    patch_size = 16
-    inner_stride = 4
-    outer_dim = 384
-    inner_dim = 24
-    outer_num_heads = 6
-    inner_num_heads = 4
-    outer_dim = make_divisible(outer_dim, outer_num_heads)
-    inner_dim = make_divisible(inner_dim, inner_num_heads)
-    model = TNT(img_size=224, patch_size=patch_size, outer_dim=outer_dim, inner_dim=inner_dim, depth=12,
-                outer_num_heads=outer_num_heads, inner_num_heads=inner_num_heads, qkv_bias=False,
-                inner_stride=inner_stride, **kwargs)
-    model.default_cfg = default_cfgs['tnt_s_patch16_224']
-    if pretrained:
-        load_pretrained(
-            model, num_classes=model.num_classes, in_chans=kwargs.get('in_chans', 3), filter_fn=_conv_filter)
-    return model
+if not is_model_registered('tnt_s_patch16_224'):
+    @register_model
+    def tnt_s_patch16_224(pretrained=False, **kwargs):
+        patch_size = 16
+        inner_stride = 4
+        outer_dim = 384
+        inner_dim = 24
+        outer_num_heads = 6
+        inner_num_heads = 4
+        outer_dim = make_divisible(outer_dim, outer_num_heads)
+        inner_dim = make_divisible(inner_dim, inner_num_heads)
+        model = TNT(img_size=224, patch_size=patch_size, outer_dim=outer_dim, inner_dim=inner_dim, depth=12,
+                    outer_num_heads=outer_num_heads, inner_num_heads=inner_num_heads, qkv_bias=False,
+                    inner_stride=inner_stride, **kwargs)
+        model.default_cfg = default_cfgs['tnt_s_patch16_224']
+        if pretrained:
+            load_pretrained(
+                model, num_classes=model.num_classes, in_chans=kwargs.get('in_chans', 3), filter_fn=_conv_filter)
+        return model
 
 
-@register_model
-def tnt_b_patch16_224(pretrained=False, **kwargs):
-    patch_size = 16
-    inner_stride = 4
-    outer_dim = 640
-    inner_dim = 40
-    outer_num_heads = 10
-    inner_num_heads = 4
-    outer_dim = make_divisible(outer_dim, outer_num_heads)
-    inner_dim = make_divisible(inner_dim, inner_num_heads)
-    model = TNT(img_size=224, patch_size=patch_size, outer_dim=outer_dim, inner_dim=inner_dim, depth=12,
-                outer_num_heads=outer_num_heads, inner_num_heads=inner_num_heads, qkv_bias=False,
-                inner_stride=inner_stride, **kwargs)
-    model.default_cfg = default_cfgs['tnt_b_patch16_224']
-    if pretrained:
-        load_pretrained(
-            model, num_classes=model.num_classes, in_chans=kwargs.get('in_chans', 3), filter_fn=_conv_filter)
-    return model
+if not is_model_registered('tnt_b_patch16_224'):
+    @register_model
+    def tnt_b_patch16_224(pretrained=False, **kwargs):
+        patch_size = 16
+        inner_stride = 4
+        outer_dim = 640
+        inner_dim = 40
+        outer_num_heads = 10
+        inner_num_heads = 4
+        outer_dim = make_divisible(outer_dim, outer_num_heads)
+        inner_dim = make_divisible(inner_dim, inner_num_heads)
+        model = TNT(img_size=224, patch_size=patch_size, outer_dim=outer_dim, inner_dim=inner_dim, depth=12,
+                    outer_num_heads=outer_num_heads, inner_num_heads=inner_num_heads, qkv_bias=False,
+                    inner_stride=inner_stride, **kwargs)
+        model.default_cfg = default_cfgs['tnt_b_patch16_224']
+        if pretrained:
+            load_pretrained(
+                model, num_classes=model.num_classes, in_chans=kwargs.get('in_chans', 3), filter_fn=_conv_filter)
+        return model
+
 
 if __name__ == '__main__':
     input=torch.randn(1,3,224,224)
