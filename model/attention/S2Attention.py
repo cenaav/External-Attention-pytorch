@@ -47,11 +47,11 @@ class SplitAttention(nn.Module):
 
 class S2Attention(nn.Module):
 
-    def __init__(self, channels=512 ):
+    def __init__(self, channels=512):
         super().__init__()
-        self.mlp1 = nn.Linear(channels,channels*3)
-        self.mlp2 = nn.Linear(channels,channels)
-        self.split_attention = SplitAttention()
+        self.mlp1 = nn.Linear(channels, channels*3)
+        self.mlp2 = nn.Linear(channels, channels)
+        self.split_attention = SplitAttention(channel)
 
     def forward(self, x):
         b,c,w,h = x.size()
