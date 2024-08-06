@@ -2,7 +2,7 @@ import torch
 from torch import nn
 
 class DepthwiseSeparableConvolution(nn.Module):
-    def __init__(self,in_ch,out_ch,kernel_size=3,stride=1,padding=1):
+    def __init__(self, in_ch, out_ch, kernel_size=3, stride=1, padding=1):
         super().__init__()
         self.depthwise_conv=nn.Conv2d(
             in_channels=in_ch,

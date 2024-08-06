@@ -17,9 +17,11 @@ class BasicConv(nn.Module):
             x = self.relu(x)
         return x
 
+
 class ZPool(nn.Module):
     def forward(self, x):
         return torch.cat( (torch.max(x,1)[0].unsqueeze(1), torch.mean(x,1).unsqueeze(1)), dim=1)
+
 
 class AttentionGate(nn.Module):
     def __init__(self):
@@ -33,6 +35,7 @@ class AttentionGate(nn.Module):
         scale = torch.sigmoid_(x_out) 
         return x * scale
 
+
 class TripletAttention(nn.Module):
     def __init__(self, no_spatial=False):
         super(TripletAttention, self).__init__()
@@ -41,6 +44,7 @@ class TripletAttention(nn.Module):
         self.no_spatial=no_spatial
         if not no_spatial:
             self.hw = AttentionGate()
+            
     def forward(self, x):
         x_perm1 = x.permute(0,2,1,3).contiguous()
         x_out1 = self.cw(x_perm1)
@@ -54,6 +58,7 @@ class TripletAttention(nn.Module):
         else:
             x_out = 1/2 * (x_out11 + x_out21)
         return x_out
+
 
 if __name__ == '__main__':
     input=torch.randn(50,512,7,7)

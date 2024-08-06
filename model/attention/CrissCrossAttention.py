@@ -15,7 +15,7 @@ def INF(B,H,W):
 class CrissCrossAttention(nn.Module):
     """ Criss-Cross Attention Module"""
     def __init__(self, in_dim):
-        super(CrissCrossAttention,self).__init__()
+        super(CrissCrossAttention, self).__init__()
         self.query_conv = nn.Conv2d(in_channels=in_dim, out_channels=in_dim//8, kernel_size=1)
         self.key_conv = nn.Conv2d(in_channels=in_dim, out_channels=in_dim//8, kernel_size=1)
         self.value_conv = nn.Conv2d(in_channels=in_dim, out_channels=in_dim, kernel_size=1)
@@ -47,6 +47,7 @@ class CrissCrossAttention(nn.Module):
         out_W = torch.bmm(proj_value_W, att_W.permute(0, 2, 1)).view(m_batchsize,height,-1,width).permute(0,2,1,3)
         #print(out_H.size(),out_W.size())
         return self.gamma*(out_H + out_W) + x
+
 
 if __name__ == '__main__':
     input=torch.randn(3, 64, 7, 7)

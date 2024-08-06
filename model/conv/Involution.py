@@ -7,7 +7,7 @@ from torch.nn import functional as F
 
 
 class Involution(nn.Module):
-    def __init__(self, kernel_size, in_channel=4, stride=1, group=1,ratio=4):
+    def __init__(self, kernel_size, in_channel=4, stride=1, group=1, ratio=4):
         super().__init__()
         self.kernel_size=kernel_size
         self.in_channel=in_channel

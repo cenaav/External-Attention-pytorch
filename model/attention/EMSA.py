@@ -7,7 +7,7 @@ from torch.nn import init
 
 class EMSA(nn.Module):
 
-    def __init__(self, d_model, d_k, d_v, h,dropout=.1,H=7,W=7,ratio=3,apply_transform=True):
+    def __init__(self, d_model, d_k, d_v, h, dropout=.1, H=7, W=7, ratio=3, apply_transform=True):
 
         super(EMSA, self).__init__()
         self.H=H

@@ -2,13 +2,8 @@ import torch
 from torch import nn
 
 
-
-
-
-
-
 class sMLPBlock(nn.Module):
-    def __init__(self,h=224,w=224,c=3):
+    def __init__(self, h=224, w=224, c=3):
         super().__init__()
         self.proj_h=nn.Linear(h,h)
         self.proj_w=nn.Linear(w,w)

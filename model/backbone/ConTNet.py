@@ -185,7 +185,6 @@ class MLP(nn.Module):
 
         return x
         
-
 class STE(nn.Module):
     r"""
     Build a Standard Transformer Encoder(STE)
@@ -436,6 +435,7 @@ class ConTNet(nn.Module):
         x = self.fc(x)
 
         return x
+
 
 def create_ConTNet_Ti(kwargs):
     return ConTNet(block=ConTBlock, 

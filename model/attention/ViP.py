@@ -3,7 +3,7 @@ from torch import nn
 
 
 class MLP(nn.Module):
-    def __init__(self,in_features,hidden_features,out_features,act_layer=nn.GELU,drop=0.1):
+    def __init__(self, in_features, hidden_features, out_features, act_layer=nn.GELU, drop=0.1):
         super().__init__()
         self.fc1=nn.Linear(in_features,hidden_features)
         self.act=act_layer()
@@ -14,7 +14,7 @@ class MLP(nn.Module):
         return self.drop(self.fc2(self.drop(self.act(self.fc1(x)))))
 
 class WeightedPermuteMLP(nn.Module):
-    def __init__(self,dim,seg_dim=8, qkv_bias=False, proj_drop=0.):
+    def __init__(self, dim, seg_dim=8, qkv_bias=False, proj_drop=0.):
         super().__init__()
         self.seg_dim=seg_dim
 

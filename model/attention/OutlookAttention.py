@@ -7,8 +7,7 @@ from torch.nn import functional as F
 
 class OutlookAttention(nn.Module):
 
-    def __init__(self,dim,num_heads=1,kernel_size=3,padding=1,stride=1,qkv_bias=False,
-                    attn_drop=0.1):
+    def __init__(self, dim, num_heads=1, kernel_size=3, padding=1, stride=1, qkv_bias=False, attn_drop=0.1):
         super().__init__()
         self.dim=dim
         self.num_heads=num_heads

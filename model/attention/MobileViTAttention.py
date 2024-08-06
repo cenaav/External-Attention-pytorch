@@ -11,6 +11,7 @@ class PreNorm(nn.Module):
     def forward(self,x,**kwargs):
         return self.fn(self.ln(x),**kwargs)
 
+
 class FeedForward(nn.Module):
     def __init__(self,dim,mlp_dim,dropout) :
         super().__init__()
@@ -24,8 +25,9 @@ class FeedForward(nn.Module):
     def forward(self,x):
         return self.net(x)
 
+
 class Attention(nn.Module):
-    def __init__(self,dim,heads,head_dim,dropout):
+    def __init__(self, dim, heads, head_dim, dropout):
         super().__init__()
         inner_dim=heads*head_dim
         project_out=not(heads==1 and head_dim==dim)
@@ -51,11 +53,8 @@ class Attention(nn.Module):
         return self.to_out(out)
 
 
-
-
-
 class Transformer(nn.Module):
-    def __init__(self,dim,depth,heads,head_dim,mlp_dim,dropout=0.):
+    def __init__(self, dim, depth, heads, head_dim, mlp_dim, dropout=0.):
         super().__init__()
         self.layers=nn.ModuleList([])
         for _ in range(depth):
@@ -72,8 +71,9 @@ class Transformer(nn.Module):
             out=out+ffn(out)
         return out
 
+
 class MobileViTAttention(nn.Module):
-    def __init__(self,in_channel=3,dim=512,kernel_size=3,patch_size=7):
+    def __init__(self, in_channel=3, dim=512, kernel_size=3, patch_size=7):
         super().__init__()
         self.ph,self.pw=patch_size,patch_size
         self.conv1=nn.Conv2d(in_channel,in_channel,kernel_size=kernel_size,padding=kernel_size//2)

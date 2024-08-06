@@ -6,7 +6,7 @@ from torch.nn import init
 
 
 class Depth_Pointwise_Conv1d(nn.Module):
-    def __init__(self,in_ch,out_ch,k):
+    def __init__(self, in_ch, out_ch, k):
         super().__init__()
         if(k==1):
             self.depth_conv=nn.Identity()
@@ -32,7 +32,7 @@ class Depth_Pointwise_Conv1d(nn.Module):
 
 class MUSEAttention(nn.Module):
 
-    def __init__(self, d_model, d_k, d_v, h,dropout=.1):
+    def __init__(self, d_model, d_k, d_v, h, dropout=.1):
 
 
         super(MUSEAttention, self).__init__()

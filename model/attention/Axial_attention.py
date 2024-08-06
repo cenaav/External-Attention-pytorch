@@ -142,8 +142,10 @@ class ReversibleSequence(nn.Module):
 def exists(val):
     return val is not None
 
+
 def map_el_ind(arr, ind):
     return list(map(itemgetter(ind), arr))
+
 
 def sort_and_return_indices(arr):
     indices = [ind for ind in range(len(arr))]
@@ -183,6 +185,7 @@ class ChanLayerNorm(nn.Module):
         mean = torch.mean(x, dim = 1, keepdim = True)
         return (x - mean) / (std + self.eps) * self.g + self.b
 
+
 class PreNorm(nn.Module):
     def __init__(self, dim, fn):
         super().__init__()
@@ -192,6 +195,7 @@ class PreNorm(nn.Module):
     def forward(self, x):
         x = self.norm(x)
         return self.fn(x)
+
 
 class Sequential(nn.Module):
     def __init__(self, blocks):
@@ -203,6 +207,7 @@ class Sequential(nn.Module):
             x = x + f(x)
             x = x + g(x)
         return x
+
 
 class PermuteToFrom(nn.Module):
     def __init__(self, permutation, fn):
@@ -283,7 +288,6 @@ class SelfAttention(nn.Module):
         return out
 
 # axial attention class
-
 class AxialAttention(nn.Module):
     def __init__(self, dim, num_dimensions = 2, heads = 8, dim_heads = None, dim_index = -1, sum_axial_out = True):
         assert (dim % heads) == 0, 'hidden dimension must be divisible by number of heads'
@@ -340,6 +344,7 @@ class AxialImageTransformer(nn.Module):
     def forward(self, x):
         x = self.pos_emb(x)
         return self.layers(x)
+
 
 # input=torch.randn(3, 128, 7, 7)
 

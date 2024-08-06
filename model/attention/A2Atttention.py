@@ -8,7 +8,7 @@ from torch.nn import functional as F
 
 class DoubleAttention(nn.Module):
 
-    def __init__(self, in_channels,c_m,c_n,reconstruct = True):
+    def __init__(self, in_channels, c_m, c_n, reconstruct=True):
         super().__init__()
         self.in_channels=in_channels
         self.reconstruct = reconstruct

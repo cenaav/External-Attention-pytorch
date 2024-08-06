@@ -403,6 +403,7 @@ def crossvit_9_dagger_224(pretrained=False, **kwargs):
         model.load_state_dict(state_dict)
     return model
 
+
 @register_model
 def crossvit_15_dagger_224(pretrained=False, **kwargs):
     model = VisionTransformer(img_size=[240, 224],
@@ -414,6 +415,7 @@ def crossvit_15_dagger_224(pretrained=False, **kwargs):
         state_dict = torch.hub.load_state_dict_from_url(_model_urls['crossvit_15_dagger_224'], map_location='cpu')
         model.load_state_dict(state_dict)
     return model
+
 
 @register_model
 def crossvit_15_dagger_384(pretrained=False, **kwargs):
@@ -427,6 +429,7 @@ def crossvit_15_dagger_384(pretrained=False, **kwargs):
         model.load_state_dict(state_dict)
     return model
 
+
 @register_model
 def crossvit_18_dagger_224(pretrained=False, **kwargs):
     model = VisionTransformer(img_size=[240, 224],
@@ -439,6 +442,7 @@ def crossvit_18_dagger_224(pretrained=False, **kwargs):
         model.load_state_dict(state_dict)
     return model
 
+
 @register_model
 def crossvit_18_dagger_384(pretrained=False, **kwargs):
     model = VisionTransformer(img_size=[408, 384],
@@ -450,6 +454,7 @@ def crossvit_18_dagger_384(pretrained=False, **kwargs):
         state_dict = torch.hub.load_state_dict_from_url(_model_urls['crossvit_18_dagger_384'], map_location='cpu')
         model.load_state_dict(state_dict)
     return model
+
 
 if __name__ == "__main__":
     input=torch.randn(1,3,224,224)

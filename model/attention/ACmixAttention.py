@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+
 def position(H, W, is_cuda=True):
     if is_cuda:
         loc_w = torch.linspace(-1.0, 1.0, W).cuda().unsqueeze(0).repeat(H, 1)
@@ -17,9 +18,11 @@ def stride(x, stride):
     b, c, h, w = x.shape
     return x[:, :, ::stride, ::stride]
 
+
 def init_rate_half(tensor):
     if tensor is not None:
         tensor.data.fill_(0.5)
+
 
 def init_rate_0(tensor):
     if tensor is not None:
@@ -98,6 +101,7 @@ class ACmix(nn.Module):
         out_conv = self.dep_conv(f_conv)
 
         return self.rate1 * out_att + self.rate2 * out_conv
+
 
 if __name__ == '__main__':
     input=torch.randn(50,256,7,7)

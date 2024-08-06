@@ -10,7 +10,7 @@ from torch.nn import functional as F
 
 class CoTAttention(nn.Module):
 
-    def __init__(self, dim=512,kernel_size=3):
+    def __init__(self, dim=512, kernel_size=3):
         super().__init__()
         self.dim=dim
         self.kernel_size=kernel_size

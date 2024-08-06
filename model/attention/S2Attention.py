@@ -23,13 +23,13 @@ def spatial_shift2(x):
 
 
 class SplitAttention(nn.Module):
-    def __init__(self,channel=512,k=3):
+    def __init__(self, channel=512, k=3):
         super().__init__()
         self.channel=channel
         self.k=k
-        self.mlp1=nn.Linear(channel,channel,bias=False)
+        self.mlp1=nn.Linear(channel, channel, bias=False)
         self.gelu=nn.GELU()
-        self.mlp2=nn.Linear(channel,channel*k,bias=False)
+        self.mlp2=nn.Linear(channel, channel*k, bias=False)
         self.softmax=nn.Softmax(1)
     
     def forward(self,x_all):
@@ -51,7 +51,7 @@ class S2Attention(nn.Module):
         super().__init__()
         self.mlp1 = nn.Linear(channels, channels*3)
         self.mlp2 = nn.Linear(channels, channels)
-        self.split_attention = SplitAttention(channel)
+        self.split_attention = SplitAttention(channels)
 
     def forward(self, x):
         b,c,w,h = x.size()

@@ -28,7 +28,7 @@ class Transformer(nn.Module):
                 num_heads=heads,
                 mlp_ratio=mlp_ratio,
                 qkv_bias=True,
-                drop=drop_rate,
+                proj_drop=drop_rate,
                 attn_drop=attn_drop_rate,
                 drop_path=drop_path_prob[i],
                 norm_layer=partial(nn.LayerNorm, eps=1e-6)
@@ -211,6 +211,7 @@ class DistilledPoolingTransformer(PoolingTransformer):
         else:
             return (x_cls + x_dist) / 2
 
+
 @register_model
 def pit_b(pretrained, **kwargs):
     model = PoolingTransformer(
@@ -228,6 +229,7 @@ def pit_b(pretrained, **kwargs):
         torch.load('weights/pit_b_820.pth', map_location='cpu')
         model.load_state_dict(state_dict)
     return model
+
 
 @register_model
 def pit_s(pretrained, **kwargs):
@@ -265,6 +267,7 @@ def pit_xs(pretrained, **kwargs):
         torch.load('weights/pit_xs_781.pth', map_location='cpu')
         model.load_state_dict(state_dict)
     return model
+
 
 @register_model
 def pit_ti(pretrained, **kwargs):
@@ -359,6 +362,7 @@ def pit_ti_distilled(pretrained, **kwargs):
         torch.load('weights/pit_ti_distill_746.pth', map_location='cpu')
         model.load_state_dict(state_dict)
     return model
+
 
 if __name__ == '__main__':
     input=torch.randn(1,3,224,224)

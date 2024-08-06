@@ -5,7 +5,7 @@ from torch.functional import norm
 from torch.nn import init
 
 
-def XNorm(x,gamma):
+def XNorm(x, gamma):
     norm_tensor=torch.norm(x,2,-1,True)
     return x*gamma/norm_tensor
 
@@ -15,7 +15,7 @@ class UFOAttention(nn.Module):
     Scaled dot-product attention
     '''
 
-    def __init__(self, d_model, d_k, d_v, h,dropout=.1):
+    def __init__(self, d_model, d_k, d_v, h, dropout=.1):
         '''
         :param d_model: Output dimensionality of the model
         :param d_k: Dimensionality of queries and keys

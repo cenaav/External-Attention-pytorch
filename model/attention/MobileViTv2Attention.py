@@ -18,7 +18,7 @@ class MobileViTv2Attention(nn.Module):
         :param h: Number of heads
         '''
         super(MobileViTv2Attention, self).__init__()
-        self.fc_i = nn.Linear(d_model,1)
+        self.fc_i = nn.Linear(d_model, 1)
         self.fc_k = nn.Linear(d_model, d_model)
         self.fc_v = nn.Linear(d_model, d_model)
         self.fc_o = nn.Linear(d_model, d_model)

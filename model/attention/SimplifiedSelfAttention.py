@@ -10,7 +10,7 @@ class SimplifiedScaledDotProductAttention(nn.Module):
     Scaled dot-product attention
     '''
 
-    def __init__(self, d_model, h,dropout=.1):
+    def __init__(self, d_model, h, dropout=.1):
         '''
         :param d_model: Output dimensionality of the model
         :param d_k: Dimensionality of queries and keys
