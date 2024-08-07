@@ -16,7 +16,7 @@ class CoTAttention(nn.Module):
         self.kernel_size=kernel_size
 
         self.key_embed=nn.Sequential(
-            nn.Conv2d(dim,dim,kernel_size=kernel_size,padding=kernel_size//2,groups=4,bias=False),
+            nn.Conv2d(dim,dim,kernel_size=kernel_size, padding=kernel_size//2, groups=4, bias=False),
             nn.BatchNorm2d(dim),
             nn.ReLU()
         )
@@ -30,7 +30,7 @@ class CoTAttention(nn.Module):
             nn.Conv2d(2*dim,2*dim//factor,1,bias=False),
             nn.BatchNorm2d(2*dim//factor),
             nn.ReLU(),
-            nn.Conv2d(2*dim//factor,kernel_size*kernel_size*dim,1)
+            nn.Conv2d(2*dim//factor, kernel_size*kernel_size*dim, 1)
         )
 
 

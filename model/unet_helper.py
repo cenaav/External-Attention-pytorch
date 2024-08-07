@@ -82,8 +82,8 @@ from .rep.ddb import transVI_conv_scale
 from .conv.DepthwiseSeparableConvolution import DepthwiseSeparableConvolution
 from .conv.MBConv import MBConvBlock
 from .conv.Involution import Involution
-from .conv.DynamicConv import *
-from .conv.CondConv import *
+from .conv.DynamicConv import DynamicConv
+from .conv.CondConv import CondConv
 
 
 
@@ -93,7 +93,7 @@ class ScaledDotProductAttentionHelper(nn.Module):
         super().__init__()
         l = d_model * d_model
         self.model = ScaledDotProductAttention(d_model=l, d_k=l, d_v=l, h=h, dropout=dropout)
-
+        
     def forward(self, input):
         batch_size, channels, height, width = input.shape
         #input_reshaped = input.view(batch_size, channels, height * width).permute(0, 1, 2)
@@ -210,15 +210,15 @@ class MobileViTv2AttentionHelper(nn.Module):
     
 
 
-def create_conv_block(class_name, ch_in=16, ch_out=16, ch_wh=512):  
+def create_attention_block(class_name, ch_in=16, ch_out=16, ch_wh=512):  
     
     match class_name:
         #------------------------------------------------------------------------------
         #Attention
         case 'ExternalAttention':
-            return ExternalAttention(d_model=ch_in, S=8)
+            return ExternalAttention(d_model=ch_wh, S=8)
         case 'ScaledDotProductAttention':
-            return ScaledDotProductAttentionHelper(d_model=ch_in, d_k=ch_in, d_v=ch_in, h=8, dropout=0.1)
+            return ScaledDotProductAttentionHelper(d_model=ch_wh, d_k=ch_wh, d_v=ch_wh, h=8, dropout=0.1)
         case 'SimplifiedScaledDotProductAttention':
             return SimplifiedScaledDotProductAttentionHelper(d_model=ch_in, h=8, dropout=0.1)
         case 'SEAttention':    
@@ -226,29 +226,40 @@ def create_conv_block(class_name, ch_in=16, ch_out=16, ch_wh=512):
         case 'SKAttention':
             return SKAttention(channel=ch_in, kernels=[1,3,5,7], reduction=16, group=1, L=32)
         case 'CBAMBlock':
-            return CBAMBlock(channel=ch_in, reduction=8, kernel_size=3)
+            r = 8 if ch_in > 8 else ch_in
+            return CBAMBlock(channel=ch_in, reduction=r, kernel_size=3)
         case 'BAMBlock':
+            # throw an error if batch number is equal to 1
             return BAMBlock(channel=ch_in, reduction=8, dia_val=1)
         case 'ECAAttention':
             return ECAAttention(kernel_size=3)
         case 'DAModule':
             return DAModule(d_model=ch_in, kernel_size=3, H=ch_wh, W=ch_wh)
         case 'PSA':
-            return PSA(channel=ch_in, reduction=8, S=2)
+            r = 8 if ch_in > 8 else ch_in
+            return PSA(channel=ch_in, reduction=r, S=1)
         case 'EMSA':
             return EMSAHelper(d_model=ch_wh, d_k=ch_wh, d_v=ch_wh, h=8, H=8, W=8, ratio=1, apply_transform=True)
         case 'ShuffleAttention':
-            return ShuffleAttention(channel=ch_in, reduction=16, G=8)
+            if (ch_in == 1) or (ch_in == 3) or (ch_in % 2 !=0):
+                print("Wrong Input Parameter")
+                return None
+            g = int(ch_in/2)
+            return ShuffleAttention(channel=ch_in, reduction=16, G=g)
         case 'MUSEAttention':
             return MUSEAttentionHelper(d_model=ch_wh, d_k=ch_wh, d_v=ch_wh, h=8, dropout=0.1)
         case 'SpatialGroupEnhance':
-            return SpatialGroupEnhance(groups=8)
+            if ch_in % 2 !=0:
+                g = ch_in
+            else:
+                g = int(ch_in/2)
+            return SpatialGroupEnhance(groups=g)
         case 'DoubleAttention':
             return DoubleAttention(in_channels=ch_in, c_m=32, c_n=32, reconstruct=True)
         case 'AFT_FULL':
             return AFTFULLHelper(d_model=ch_wh, n=ch_in, simple=False)
         case 'OutlookAttention':
-            return OutlookAttention(dim=ch_in, num_heads=1, kernel_size=3, padding=1, stride=1, qkv_bias=False, attn_drop=0.1)
+            return OutlookAttention(dim=ch_wh, num_heads=1, kernel_size=3, padding=1, stride=1, qkv_bias=False, attn_drop=0.1)
         case 'WeightedPermuteMLP':
             return WeightedPermuteMLP(dim=ch_in, seg_dim=8, qkv_bias=False, proj_drop=0.)
         case 'CoAtNet':
@@ -272,7 +283,7 @@ def create_conv_block(class_name, ch_in=16, ch_out=16, ch_wh=512):
         case 'CoordAtt':
             return CoordAtt(inp=ch_in, oup=ch_out, reduction=32)
         case 'MobileViTAttention':
-            return MobileViTAttention(in_channel=ch_in, dim=ch_wh, kernel_size=3, patch_size=7)
+            return MobileViTAttention(in_channel=ch_in, dim=ch_wh, kernel_size=3, patch_size=2)
         case 'ParNetAttention':
             return ParNetAttention(channel=ch_in)
         case 'UFOAttention':
@@ -280,7 +291,7 @@ def create_conv_block(class_name, ch_in=16, ch_out=16, ch_wh=512):
         case 'ACmix':
             return ACmix(in_planes=ch_in, out_planes=ch_out, kernel_att=7, head=4, kernel_conv=3, stride=1, dilation=1)
         case 'MobileViTv2Attention':
-            return MobileViTv2AttentionHelper(d_model=ch_in)
+            return MobileViTv2AttentionHelper(d_model=ch_wh)
         case 'DAT':
             raise ValueError(f"No class found for the name {class_name}")
         case 'CrossFormer':
@@ -302,10 +313,10 @@ def create_conv_block(class_name, ch_in=16, ch_out=16, ch_wh=512):
         case 'MBConvBlock':
             return MBConvBlock(ksize=3, input_filters=ch_in, output_filters=ch_out, expand_ratio=1, stride=1, image_size=ch_wh)
         case 'Involution':
-            return Involution(kernel_size=3, in_channels=ch_in, stride=1, group=1, ratio=4)
+            return Involution(kernel_size=3, in_channel=ch_in, stride=1, group=1, ratio=4)
         case 'DynamicConv':
-            return DynamicConv(in_planes=ch_in, out_planes=ch_out, kernel_size=3, stride=1, padding=0, dilation=1, groups=1, bias=True, K=4, temprature=30, ratio=4, init_weight=True)
+            return DynamicConv(in_planes=ch_in, out_planes=ch_out, kernel_size=3, stride=1, padding=1, dilation=1, groups=1, bias=True, K=4, temprature=30, ratio=4, init_weight=True)
         case 'CondConv':
-            return CondConv(in_planes=ch_in, out_planes=ch_out, kernel_size=3, stride=1, padding=0, dilation=1, groups=1, bias=True, K=4, init_weight=True)
+            return CondConv(in_planes=ch_in, out_planes=ch_out, kernel_size=3, stride=1, padding=1, dilation=1, groups=1, bias=True, K=4, init_weight=True)
         case _:
             raise ValueError(f"No class found for the name {class_name}")

@@ -18,13 +18,13 @@ class WeightedPermuteMLP(nn.Module):
         super().__init__()
         self.seg_dim=seg_dim
 
-        self.mlp_c=nn.Linear(dim,dim,bias=qkv_bias)
-        self.mlp_h=nn.Linear(dim,dim,bias=qkv_bias)
-        self.mlp_w=nn.Linear(dim,dim,bias=qkv_bias)
+        self.mlp_c=nn.Linear(dim, dim, bias=qkv_bias)
+        self.mlp_h=nn.Linear(dim, dim, bias=qkv_bias)
+        self.mlp_w=nn.Linear(dim, dim, bias=qkv_bias)
 
-        self.reweighting=MLP(dim,dim//4,dim*3)
+        self.reweighting=MLP(dim, dim//4, dim*3)
 
-        self.proj=nn.Linear(dim,dim)
+        self.proj=nn.Linear(dim, dim)
         self.proj_drop=nn.Dropout(proj_drop)
     
     def forward(self,x) :
