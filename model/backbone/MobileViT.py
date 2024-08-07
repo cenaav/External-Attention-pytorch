@@ -13,6 +13,7 @@ def conv_bn(inp,oup,kernel_size=3,stride=1):
         nn.SiLU()
     )
 
+
 class PreNorm(nn.Module):
     def __init__(self,dim,fn):
         super().__init__()
@@ -20,6 +21,7 @@ class PreNorm(nn.Module):
         self.fn=fn
     def forward(self,x,**kwargs):
         return self.fn(self.ln(x),**kwargs)
+
 
 class FeedForward(nn.Module):
     def __init__(self,dim,mlp_dim,dropout) :
@@ -33,6 +35,7 @@ class FeedForward(nn.Module):
         )
     def forward(self,x):
         return self.net(x)
+
 
 class Attention(nn.Module):
     def __init__(self,dim,heads,head_dim,dropout):
@@ -61,9 +64,6 @@ class Attention(nn.Module):
         return self.to_out(out)
 
 
-
-
-
 class Transformer(nn.Module):
     def __init__(self,dim,depth,heads,head_dim,mlp_dim,dropout=0.):
         super().__init__()
@@ -81,6 +81,7 @@ class Transformer(nn.Module):
             out=out+att(out)
             out=out+ffn(out)
         return out
+
 
 class MobileViTAttention(nn.Module):
     def __init__(self,in_channel=3,dim=512,kernel_size=3,patch_size=7,depth=3,mlp_dim=1024):
@@ -148,8 +149,9 @@ class MV2Block(nn.Module):
             out=self.conv(x)
         return out
 
+
 class MobileViT(nn.Module):
-    def __init__(self,image_size,dims,channels,num_classes,depths=[2,4,3],expansion=4,kernel_size=3,patch_size=2):
+    def __init__(self, image_size, dims, channels, num_classes,  depths=[2,4,3], expansion=4, kernel_size=3, patch_size=2):
         super().__init__()
         ih,iw=image_size,image_size
         ph,pw=patch_size,patch_size
@@ -196,15 +198,21 @@ class MobileViT(nn.Module):
         y=self.fc(y)
         return y
 
+
+
 def mobilevit_xxs():
     dims=[60,80,96]
     channels= [16, 16, 24, 24, 48, 64, 80, 320]
     return MobileViT(224,dims,channels,num_classes=1000)
 
+
+
 def mobilevit_xs():
     dims = [96, 120, 144]
     channels = [16, 32, 48, 48, 64, 80, 96, 384]
     return MobileViT(224, dims, channels, num_classes=1000)
+
+
 
 def mobilevit_s():
     dims = [144, 192, 240]
@@ -212,8 +220,10 @@ def mobilevit_s():
     return MobileViT(224, dims, channels, num_classes=1000)
 
 
+
 def count_paratermeters(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
+
 
 if __name__ == '__main__':
     input=torch.randn(1,3,224,224)

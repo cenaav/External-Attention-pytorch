@@ -6,7 +6,7 @@ from torch.nn import init
 
 
 class ChannelAttention(nn.Module):
-    def __init__(self,channel,reduction=16):
+    def __init__(self, channel, reduction=16):
         super().__init__()
         self.maxpool=nn.AdaptiveMaxPool2d(1)
         self.avgpool=nn.AdaptiveAvgPool2d(1)
@@ -25,10 +25,11 @@ class ChannelAttention(nn.Module):
         output=self.sigmoid(max_out+avg_out)
         return output
 
+
 class SpatialAttention(nn.Module):
-    def __init__(self,kernel_size=7):
+    def __init__(self, kernel_size=7):
         super().__init__()
-        self.conv=nn.Conv2d(2,1,kernel_size=kernel_size,padding=kernel_size//2)
+        self.conv=nn.Conv2d(2, 1, kernel_size=kernel_size, padding=kernel_size//2)
         self.sigmoid=nn.Sigmoid()
     
     def forward(self, x) :
@@ -43,9 +44,9 @@ class SpatialAttention(nn.Module):
 
 class CBAMBlock(nn.Module):
 
-    def __init__(self, channel=512,reduction=16,kernel_size=49):
+    def __init__(self, channel=512, reduction=16, kernel_size=49):
         super().__init__()
-        self.ca=ChannelAttention(channel=channel,reduction=reduction)
+        self.ca=ChannelAttention(channel=channel, reduction=reduction)
         self.sa=SpatialAttention(kernel_size=kernel_size)
 
 

@@ -73,7 +73,7 @@ class RelPosEmb(nn.Module):
 # classes
 
 class HaloAttention(nn.Module):
-    def __init__(self, dim, block_size, halo_size, dim_head = 64, heads = 8):
+    def __init__(self, dim, block_size, halo_size, dim_head=64, heads=8):
         super().__init__()
         assert halo_size > 0, 'halo size must be greater than 0'
 

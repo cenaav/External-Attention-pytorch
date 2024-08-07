@@ -318,7 +318,7 @@ class AxialAttention(nn.Module):
 # axial image transformer
 
 class AxialImageTransformer(nn.Module):
-    def __init__(self, dim, depth, heads = 8, dim_heads = None, dim_index = 1, reversible = True, axial_pos_emb_shape = None):
+    def __init__(self, dim, depth, heads=8, dim_heads=None, dim_index=1, reversible=True, axial_pos_emb_shape=None):
         super().__init__()
         permutations = calculate_permutations(2, dim_index)
 

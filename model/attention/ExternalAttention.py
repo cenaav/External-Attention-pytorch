@@ -7,7 +7,7 @@ from torch.nn import init
 
 class ExternalAttention(nn.Module):
 
-    def __init__(self, d_model,S=64):
+    def __init__(self, d_model, S=64):
         super().__init__()
         self.mk=nn.Linear(d_model,S,bias=False)
         self.mv=nn.Linear(S,d_model,bias=False)

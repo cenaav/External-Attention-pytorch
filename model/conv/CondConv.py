@@ -2,6 +2,7 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 
+
 class Attention(nn.Module):
     def __init__(self, in_planes, K, init_weight=True):
         super().__init__()
@@ -74,6 +75,7 @@ class CondConv(nn.Module):
         
         output=output.view(bs,self.out_planes,h,w)
         return output
+
 
 if __name__ == '__main__':
     input=torch.randn(2,32,64,64)
