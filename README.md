@@ -28,7 +28,7 @@ You can use the helper function with the following code:
 You can install this repository using pip with the following command:
 
 ```bash
-pip install git+https://github.com/cenaav/External-Attention-pytorch.git@main
+pip install git+https://github.com/cenaav/External-Attention-pytorch.git@master
 ```
 
 After installation, you can import specific attention mechanisms as follows:
