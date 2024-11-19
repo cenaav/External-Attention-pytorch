@@ -15,13 +15,6 @@ This repository is a forked version of the original project. It provides a colle
 
 ---
 
-
-
-
-# Forked Repository
-
-This is a forked version of the original repository.
-
 ## Updates in This Version
 - Added new dependencies during the installation process.
 - Fixed several bugs to enhance functionality.
@@ -35,7 +28,7 @@ You can use the helper function with the following code:
 You can install this repository using pip with the following command:
 
 ```bash
-!pip install git+https://github.com/cenaav/External-Attention-pytorch.git@main
+pip install git+https://github.com/cenaav/External-Attention-pytorch.git@main
 ```
 
 After installation, you can import specific attention mechanisms as follows:
@@ -131,25 +124,9 @@ This repository supports the following attention mechanisms:
 - CondConv
 
 
-
-
-The official account shares papers, algorithms and codes every day Oh~
-
-
-
-**Share some recent papers and analysis in the group every day. Welcome to study and exchange ha~~~
-
-(if you can't add it, you can add wechat: **775629340**, remember the remarks **[company / school + direction + ID])**
-
-![](./FightingCVimg/wechat.jpg)
-
-We strongly recommend that you pay attention to [Zhihu]( https://www.zhihu.com/people/jason-14-58-38/posts )Account number and **[fightingcv Wechat official account**]( https://mp.weixin.qq.com/s/m9RiivbbDPdjABsTd6q8FA )** to quickly learn about the latest high-quality dry goods resources.
-
--->
-
 ***
 
-# Contents
+# Orginal Content
 
 - [Attention Series](#attention-series)
     - [1. External Attention Usage](#1-external-attention-usage)
